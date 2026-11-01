@@ -1,57 +1,49 @@
+@extends('Admin.layouts.app')
 
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Tambah Barang - DulAuto</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="bg-light">
-<div class="container py-5">
-    <h2>Tambah Barang</h2>
+@section('title', 'Tambah Barang')
 
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul class="mb-0">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+@section('content')
+    @include('Admin.partials.page-heading', [
+        'title' => 'Tambah Barang',
+        'description' => 'Masukkan informasi barang yang akan dikelola.',
+    ])
+    @include('Admin.partials.feedback')
+
+    <section class="card">
+        <div class="card-body">
+            <form action="{{ route('barang.store') }}" method="POST">
+                @csrf
+                <div class="grid grid-cols-12 gap-4">
+                    <div class="col-span-12 md:col-span-6">
+                        <label for="nama_barang" class="mb-2 block font-medium">Nama Barang</label>
+                        <input id="nama_barang" type="text" name="nama_barang" class="form-control"
+                            value="{{ old('nama_barang') }}" required>
+                        @error('nama_barang') <p class="text-xs text-error">{{ $message }}</p> @enderror
+                    </div>
+                    <div class="col-span-12 md:col-span-6">
+                        <label for="kategori" class="mb-2 block font-medium">Kategori</label>
+                        <input id="kategori" type="text" name="kategori" class="form-control"
+                            value="{{ old('kategori') }}" required>
+                        @error('kategori') <p class="text-xs text-error">{{ $message }}</p> @enderror
+                    </div>
+                    <div class="col-span-12 md:col-span-6">
+                        <label for="harga" class="mb-2 block font-medium">Harga (Rp)</label>
+                        <input id="harga" type="number" name="harga" class="form-control"
+                            min="0" step="0.01" value="{{ old('harga') }}" required>
+                        @error('harga') <p class="text-xs text-error">{{ $message }}</p> @enderror
+                    </div>
+                    <div class="col-span-12 md:col-span-6">
+                        <label for="stok" class="mb-2 block font-medium">Stok</label>
+                        <input id="stok" type="number" name="stok" class="form-control"
+                            min="0" value="{{ old('stok', 0) }}" required>
+                        @error('stok') <p class="text-xs text-error">{{ $message }}</p> @enderror
+                    </div>
+                </div>
+                <div class="mt-6 flex flex-wrap gap-3">
+                    <button type="submit" class="btn bg-primary text-white">Simpan Barang</button>
+                    <a href="{{ route('barang.index') }}" class="btn btn-outline-primary">Batal</a>
+                </div>
+            </form>
         </div>
-    @endif
-
-    <form action="{{ route('barang.store') }}" method="POST"
-          class="bg-white border rounded p-4 mt-3">
-        @csrf
-
-        <div class="mb-3">
-            <label class="form-label">Nama Barang</label>
-            <input type="text" name="nama_barang" class="form-control"
-                   value="{{ old('nama_barang') }}" required>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Kategori</label>
-            <input type="text" name="kategori" class="form-control"
-                   value="{{ old('kategori') }}" required>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Harga (Rp)</label>
-            <input type="number" name="harga" class="form-control"
-                   min="0" step="0.01" value="{{ old('harga') }}" required>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Stok</label>
-            <input type="number" name="stok" class="form-control"
-                   min="0" value="{{ old('stok', 0) }}" required>
-        </div>
-
-        <button type="submit" class="btn btn-primary">Simpan</button>
-        <a href="{{ route('barang.index') }}" class="btn btn-secondary">Batal</a>
-    </form>
-</div>
-</body>
-</html>
+    </section>
+@endsection

@@ -1,66 +1,55 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Data User - DulAuto</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="bg-light">
-<div class="container py-5">
-    <h2>Data User DulAuto</h2>
+@extends('Admin.layouts.app')
 
-    <a href="{{ route('users.create') }}" class="btn btn-primary my-3">
-        + Tambah User
-    </a>
+@section('title', 'User')
 
-    @if (session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
+@section('content')
+    @include('Admin.partials.page-heading', [
+        'title' => 'Data User',
+        'description' => 'Kelola akun pengguna yang tercatat di aplikasi.',
+        'actionUrl' => route('users.create'),
+        'actionLabel' => '+ Tambah User',
+    ])
 
-    <div class="table-responsive bg-white">
-        <table class="table table-bordered table-striped">
-            <thead class="table-dark">
-                <tr>
-                    <th>No.</th>
-                    <th>Nama</th>
-                    <th>Email</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($users as $user)
-                    <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $user->name }}</td>
-                        <td>{{ $user->email }}</td>
-                        <td>
-                            <a href="{{ route('users.edit', $user) }}"
-                               class="btn btn-warning btn-sm">Edit</a>
+    @include('Admin.partials.feedback')
 
-                            <form action="{{ route('users.destroy', $user) }}"
-                                  method="POST" class="d-inline"
-                                  onsubmit="return confirm('Hapus user ini?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm">
-                                    Hapus
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="4" class="text-center">
-                            Belum ada data user.
-                        </td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
-    </div>
-
-    <a href="/admin" class="btn btn-secondary">Kembali ke Admin</a>
-</div>
-</body>
-</html>
+    <section class="card">
+        <div class="card-body">
+            <div class="overflow-x-auto">
+                <table class="table align-middle">
+                    <thead>
+                        <tr>
+                            <th scope="col">No.</th>
+                            <th scope="col">Nama</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($users as $user)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td class="font-semibold">{{ $user->name }}</td>
+                                <td>{{ $user->email }}</td>
+                                <td>
+                                    <div class="flex flex-wrap gap-2">
+                                        <a href="{{ route('users.edit', $user) }}" class="btn btn-outline-primary">Edit</a>
+                                        <form action="{{ route('users.destroy', $user) }}" method="POST"
+                                            onsubmit="return confirm('Hapus user ini?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn bg-error text-white">Hapus</button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="4" class="p-4 text-center text-bodytext">Belum ada data user.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+@endsection

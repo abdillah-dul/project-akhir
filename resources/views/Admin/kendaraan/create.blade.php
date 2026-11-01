@@ -1,78 +1,58 @@
+@extends('Admin.layouts.app')
 
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Tambah Kendaraan - DulAuto</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="bg-light">
-<div class="container py-5">
-    <div class="card shadow-sm mx-auto" style="max-width: 650px;">
-        <div class="card-body p-4">
-            <h3 class="mb-4">Tambah Mobil Bekas DulAuto</h3>
+@section('title', 'Tambah Kendaraan')
 
+@section('content')
+    @include('Admin.partials.page-heading', [
+        'title' => 'Tambah Kendaraan',
+        'description' => 'Masukkan informasi kendaraan yang akan ditampilkan di showroom.',
+    ])
+    @include('Admin.partials.feedback')
+
+    <section class="card">
+        <div class="card-body">
             <form action="{{ route('kendaraan.store') }}" method="POST">
                 @csrf
-
-                <div class="mb-3">
-                    <label class="form-label">Nama Kendaraan</label>
-                    <input type="text" name="nama_kendaraan" class="form-control"
-                        value="{{ old('nama_kendaraan') }}"
-                        placeholder="Contoh: Honda Civic">
-                    @error('nama_kendaraan')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
+                <div class="grid grid-cols-12 gap-4">
+                    <div class="col-span-12 md:col-span-6">
+                        <label for="nama_kendaraan" class="mb-2 block font-medium">Nama Kendaraan</label>
+                        <input id="nama_kendaraan" type="text" name="nama_kendaraan" class="form-control"
+                            value="{{ old('nama_kendaraan') }}" placeholder="Contoh: Honda Civic" required>
+                        @error('nama_kendaraan') <p class="text-xs text-error">{{ $message }}</p> @enderror
+                    </div>
+                    <div class="col-span-12 md:col-span-6">
+                        <label for="merek" class="mb-2 block font-medium">Merek</label>
+                        <input id="merek" type="text" name="merek" class="form-control"
+                            value="{{ old('merek') }}" placeholder="Contoh: Honda" required>
+                        @error('merek') <p class="text-xs text-error">{{ $message }}</p> @enderror
+                    </div>
+                    <div class="col-span-12 md:col-span-6">
+                        <label for="tahun" class="mb-2 block font-medium">Tahun</label>
+                        <input id="tahun" type="number" name="tahun" class="form-control"
+                            value="{{ old('tahun') }}" min="1900" max="2026" placeholder="Contoh: 2022" required>
+                        @error('tahun') <p class="text-xs text-error">{{ $message }}</p> @enderror
+                    </div>
+                    <div class="col-span-12 md:col-span-6">
+                        <label for="harga" class="mb-2 block font-medium">Harga (Rp)</label>
+                        <input id="harga" type="number" name="harga" class="form-control"
+                            value="{{ old('harga') }}" min="0" step="0.01" placeholder="Contoh: 250000000" required>
+                        @error('harga') <p class="text-xs text-error">{{ $message }}</p> @enderror
+                    </div>
+                    <div class="col-span-12 md:col-span-6">
+                        <label for="kondisi" class="mb-2 block font-medium">Kondisi</label>
+                        <select id="kondisi" name="kondisi" class="form-control" required>
+                            <option value="">-- Pilih Kondisi --</option>
+                            <option value="Bekas" {{ old('kondisi') == 'Bekas' ? 'selected' : '' }}>Bekas</option>
+                            <option value="Sangat Baik" {{ old('kondisi') == 'Sangat Baik' ? 'selected' : '' }}>Sangat Baik</option>
+                        </select>
+                        @error('kondisi') <p class="text-xs text-error">{{ $message }}</p> @enderror
+                    </div>
                 </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Merek</label>
-                    <input type="text" name="merek" class="form-control"
-                        value="{{ old('merek') }}"
-                        placeholder="Contoh: Honda">
-                    @error('merek')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
+                <div class="mt-6 flex flex-wrap gap-3">
+                    <button type="submit" class="btn bg-primary text-white">Simpan Kendaraan</button>
+                    <a href="{{ route('kendaraan.index') }}" class="btn btn-outline-primary">Batal</a>
                 </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Tahun</label>
-                    <input type="number" name="tahun" class="form-control"
-                        value="{{ old('tahun') }}"
-                        placeholder="Contoh: 2022">
-                    @error('tahun')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Harga (Rp)</label>
-                    <input type="number" name="harga" class="form-control"
-                        value="{{ old('harga') }}"
-                        placeholder="Contoh: 250000000">
-                    @error('harga')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Kondisi</label>
-                    <select name="kondisi" class="form-select">
-                        <option value="">-- Pilih Kondisi --</option>
-                        <option value="Bekas" {{ old('kondisi') == 'Bekas' ? 'selected' : '' }}>Bekas</option>
-                        <option value="Sangat Baik" {{ old('kondisi') == 'Sangat Baik' ? 'selected' : '' }}>Sangat Baik</option>
-                    </select>
-                    @error('kondisi')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <button type="submit" class="btn btn-primary">Simpan Kendaraan</button>
-                <a href="{{ route('kendaraan.index') }}" class="btn btn-secondary">Kembali</a>
             </form>
         </div>
-    </div>
-</div>
-</body>
-</html>
+    </section>
+@endsection

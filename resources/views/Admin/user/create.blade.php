@@ -1,19 +1,20 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Tambah User - DulAuto</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="bg-light">
-<div class="container py-5">
-    <h2>Tambah User</h2>
+@extends('Admin.layouts.app')
 
-    @include('Admin.user._form', [
-        'user' => null,
-        'formAction' => route('users.store'),
+@section('title', 'Tambah User')
+
+@section('content')
+    @include('Admin.partials.page-heading', [
+        'title' => 'Tambah User',
+        'description' => 'Buat akun pengguna aplikasi.',
     ])
-</div>
-</body>
-</html>
+    @include('Admin.partials.feedback')
+
+    <section class="card">
+        <div class="card-body">
+            @include('Admin.user._form', [
+                'user' => null,
+                'formAction' => route('users.store'),
+            ])
+        </div>
+    </section>
+@endsection

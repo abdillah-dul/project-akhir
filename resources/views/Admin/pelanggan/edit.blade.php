@@ -1,58 +1,49 @@
+@extends('Admin.layouts.app')
 
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Edit Pelanggan - DulAuto</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="bg-light">
-<div class="container py-5">
-    <h2>Edit Pelanggan</h2>
+@section('title', 'Edit Pelanggan')
 
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul class="mb-0">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+@section('content')
+    @include('Admin.partials.page-heading', [
+        'title' => 'Edit Pelanggan',
+        'description' => 'Perbarui informasi kontak pelanggan.',
+    ])
+    @include('Admin.partials.feedback')
+
+    <section class="card">
+        <div class="card-body">
+            <form action="{{ route('pelanggan.update', $pelanggan->id) }}" method="POST">
+                @csrf
+                @method('PUT')
+                <div class="grid grid-cols-12 gap-4">
+                    <div class="col-span-12 md:col-span-6">
+                        <label for="nama" class="mb-2 block font-medium">Nama</label>
+                        <input id="nama" type="text" name="nama" class="form-control"
+                            value="{{ old('nama', $pelanggan->nama) }}" required>
+                        @error('nama') <p class="text-xs text-error">{{ $message }}</p> @enderror
+                    </div>
+                    <div class="col-span-12 md:col-span-6">
+                        <label for="email" class="mb-2 block font-medium">Email</label>
+                        <input id="email" type="email" name="email" class="form-control"
+                            value="{{ old('email', $pelanggan->email) }}" required>
+                        @error('email') <p class="text-xs text-error">{{ $message }}</p> @enderror
+                    </div>
+                    <div class="col-span-12 md:col-span-6">
+                        <label for="no_telepon" class="mb-2 block font-medium">No. Telepon</label>
+                        <input id="no_telepon" type="text" name="no_telepon" class="form-control"
+                            value="{{ old('no_telepon', $pelanggan->no_telepon) }}" required>
+                        @error('no_telepon') <p class="text-xs text-error">{{ $message }}</p> @enderror
+                    </div>
+                    <div class="col-span-12">
+                        <label for="alamat" class="mb-2 block font-medium">Alamat</label>
+                        <textarea id="alamat" name="alamat" class="form-control" rows="4" required>{{ old('alamat', $pelanggan->alamat) }}</textarea>
+                        @error('alamat') <p class="text-xs text-error">{{ $message }}</p> @enderror
+                    </div>
+                </div>
+                <div class="mt-6 flex flex-wrap gap-3">
+                    <button type="submit" class="btn bg-primary text-white">Simpan Perubahan</button>
+                    <a href="{{ route('pelanggan.index') }}" class="btn btn-outline-primary">Batal</a>
+                </div>
+            </form>
         </div>
-    @endif
-
-    <form action="{{ route('pelanggan.update', $pelanggan->id) }}"
-          method="POST" class="bg-white border rounded p-4 mt-3">
-        @csrf
-        @method('PUT')
-
-        <div class="mb-3">
-            <label class="form-label">Nama</label>
-            <input type="text" name="nama" class="form-control"
-                   value="{{ old('nama', $pelanggan->nama) }}" required>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Email</label>
-            <input type="email" name="email" class="form-control"
-                   value="{{ old('email', $pelanggan->email) }}" required>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">No. Telepon</label>
-            <input type="text" name="no_telepon" class="form-control"
-                   value="{{ old('no_telepon', $pelanggan->no_telepon) }}" required>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Alamat</label>
-            <textarea name="alamat" class="form-control" rows="3"
-                      required>{{ old('alamat', $pelanggan->alamat) }}</textarea>
-        </div>
-
-        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-        <a href="{{ route('pelanggan.index') }}" class="btn btn-secondary">Batal</a>
-    </form>
-</div>
-</body>
-</html>
+    </section>
+@endsection
