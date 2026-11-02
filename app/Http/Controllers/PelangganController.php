@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pelanggan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class PelangganController extends Controller
@@ -61,6 +62,11 @@ class PelangganController extends Controller
 
     public function destroy(Pelanggan $pelanggan)
     {
+        if (DB::table('pemesanan_servis')->where('pelanggan_id', $pelanggan->id)->exists()) {
+            return redirect()->route('pelanggan.index')
+                ->with('error', 'Pelanggan tidak dapat dihapus karena memiliki riwayat pemesanan servis.');
+        }
+
         $pelanggan->delete();
 
         return redirect()->route('pelanggan.index')

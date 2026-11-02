@@ -42,6 +42,18 @@
                         </a>
                     </li>
                     <li class="sidebar-item">
+                        <a class="sidebar-link dark-sidebar-link {{ request()->routeIs('layanan.*') ? 'active activemenu' : '' }}"
+                            href="{{ route('layanan.index') }}">
+                            <span class="hide-menu">Layanan Servis</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link dark-sidebar-link {{ request()->routeIs('pemesanan-servis.*') ? 'active activemenu' : '' }}"
+                            href="{{ route('pemesanan-servis.index') }}">
+                            <span class="hide-menu">Pemesanan Servis</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
                         <a class="sidebar-link dark-sidebar-link {{ request()->routeIs('users.*') ? 'active activemenu' : '' }}"
                             href="{{ route('users.index') }}">
                             <span class="hide-menu">User</span>

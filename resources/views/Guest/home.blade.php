@@ -213,63 +213,7 @@
       </div>
     </section>
 
-    <!-- ============ SERVICES ============ -->
-    <section class="ah-section bg-charcoal" id="services">
-      <div class="container">
-        <div class="ah-section-head reveal">
-          <span class="ah-eyebrow">Jelajahi DulAuto</span>
-          <h2 class="ah-section-title">Katalog dan informasi kendaraan</h2>
-          <p class="ah-section-sub">Temukan kendaraan, bandingkan informasinya, lalu gunakan simulasi sebagai gambaran awal.</p>
-        </div>
-
-        <div class="row g-4">
-          <div class="col-md-6 col-lg-3">
-            <div class="ah-service reveal">
-              <span class="num">01</span>
-              <h3>Katalog kendaraan</h3>
-              <p>Jelajahi kendaraan yang terdaftar dan lihat informasi utamanya dalam satu halaman.</p>
-              <ul>
-                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Data dari database DulAuto</li>
-                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Daftar kendaraan terkini</li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-3">
-            <div class="ah-service reveal reveal-d1">
-              <span class="num">02</span>
-              <h3>Filter pencarian</h3>
-              <p>Persempit pilihan kendaraan sesuai informasi dan preferensi yang tersedia.</p>
-              <ul>
-                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Cari berdasarkan nama atau merek</li>
-                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Saring berdasarkan harga dan kondisi</li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-3">
-            <div class="ah-service reveal reveal-d2">
-              <span class="num">03</span>
-              <h3>Urutkan pilihan</h3>
-              <p>Atur urutan katalog berdasarkan harga atau tahun kendaraan untuk memudahkan perbandingan.</p>
-              <ul>
-                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Urutkan berdasarkan harga</li>
-                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Urutkan berdasarkan tahun</li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-3">
-            <div class="ah-service reveal reveal-d3">
-              <span class="num">04</span>
-              <h3>Simulasi angsuran</h3>
-              <p>Sesuaikan nilai kendaraan, uang muka, tenor, dan bunga untuk melihat perkiraan angsuran.</p>
-              <ul>
-                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Nilai simulasi dapat diatur</li>
-                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Bukan penawaran resmi</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    @include('Guest.partials.services', ['layanan' => $layanan])
 
     <!-- ============ BRANDS ============ -->
     <section class="ah-section" id="brands">

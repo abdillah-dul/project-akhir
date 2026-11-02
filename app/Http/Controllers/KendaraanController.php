@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Kendaraan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class KendaraanController extends Controller
 {
     public function index()
     {
         $kendaraan = Kendaraan::latest()->get();
+
         return view('Admin.kendaraan.index', compact('kendaraan'));
     }
 
@@ -57,6 +59,11 @@ class KendaraanController extends Controller
 
     public function destroy(Kendaraan $kendaraan)
     {
+        if (DB::table('pemesanan_servis')->where('kendaraan_id', $kendaraan->id)->exists()) {
+            return redirect()->route('kendaraan.index')
+                ->with('error', 'Kendaraan tidak dapat dihapus karena memiliki riwayat pemesanan servis.');
+        }
+
         $kendaraan->delete();
 
         return redirect()->route('kendaraan.index')

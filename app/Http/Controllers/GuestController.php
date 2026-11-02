@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kendaraan;
+use App\Models\LayananServis;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -18,6 +19,7 @@ class GuestController extends Controller
 
         return view('Guest.home', [
             'featuredVehicles' => Kendaraan::query()->latest()->limit(3)->get(),
+            'layanan' => LayananServis::query()->where('is_active', true)->orderBy('nama')->get(),
             'merekList' => $merekList,
             'kondisiList' => $kondisiList,
             'vehicleCount' => $vehicleCount,

@@ -22,6 +22,8 @@ class AdminTemplateCrudTest extends TestCase
             ->assertSee(route('pelanggan.index'))
             ->assertSee(route('barang.index'))
             ->assertSee(route('kendaraan.index'))
+            ->assertSee(route('layanan.index'))
+            ->assertSee(route('pemesanan-servis.index'))
             ->assertSee($assetUrl);
 
         foreach ([
@@ -31,6 +33,10 @@ class AdminTemplateCrudTest extends TestCase
             route('barang.create'),
             route('kendaraan.index'),
             route('kendaraan.create'),
+            route('layanan.index'),
+            route('layanan.create'),
+            route('pemesanan-servis.index'),
+            route('pemesanan-servis.create'),
             route('users.index'),
             route('users.create'),
         ] as $url) {
